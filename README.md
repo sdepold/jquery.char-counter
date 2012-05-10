@@ -36,3 +36,7 @@ on the textarea:
     // or
 
     <textarea id="user_bio" data-char-limit="200"></textarea>
+
+## License
+
+Hereby place under MIT license.
