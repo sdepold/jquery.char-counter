@@ -67,4 +67,12 @@ describe('jquery.char-counter', function() {
     expect(this.textarea.text().length).toEqual(140)
     expect(this.messageContainer.text()).toEqual('0 chars left.')
   })
+
+  it("correctly replaces char counter in custom message", function() {
+    this.textarea.charCounter({
+      messageContainer: '#' + this.messageContainer.attr('id'),
+      message: 'Noch %{count} Zeichen verfügbar!'
+    })
+    expect(this.messageContainer.text()).toEqual('Noch 140 Zeichen verfügbar!')
+  })
 })
