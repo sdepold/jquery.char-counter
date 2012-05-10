@@ -2,17 +2,22 @@
   "use strict"
 
   $.fn.charCounter = function(options) {
+    var $element = $(this)
+
     options = $.extend({
-      limit: 140,
-      messageContainer: '#messageContainer'
+      limit: $element.attr('data-char-limit') || 140,
+      messageContainer: '#messageContainer',
       message: "%{count} chars left."
     }, options || {})
 
-    var $element = $(this)
 
     $element.keyup(function() {
       checkTextLength($element, options)
+      updateMessageContainer($element, options)
     })
+
+    checkTextLength($element, options)
+    updateMessageContainer($element, options)
   }
 
   var checkTextLength = function($element, options) {
@@ -24,7 +29,7 @@
   var updateMessageContainer = function($element, options) {
     var $messageContainer = $(options.messageContainer)
       , leftCharacters    = options.limit - $element.text().length
-      , text              = options.message.replace('${count}', ((leftCharacters < 0) ? 0 : leftCharacters))
+      , text              = options.message.replace('%{count}', ((leftCharacters < 0) ? 0 : leftCharacters))
 
     $messageContainer.text(text)
   }

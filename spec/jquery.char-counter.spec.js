@@ -11,28 +11,60 @@ describe('jquery.char-counter', function() {
       messageContainer: '#' + this.messageContainer.attr('id')
     })
 
-    expect(this.messageContainer.text()).not.toEqual('')
+    expect(this.messageContainer.text()).toEqual('140 chars left.')
   })
 
-  it("//limits the length of the inserted test by default", function() {
-    console.log(this.textarea.get(0).outerHTML)
+  it("allows overriding the limit", function() {
+    this.textarea.charCounter({
+      messageContainer: '#' + this.messageContainer.attr('id'),
+      limit: 200
+    })
 
-    new DaWanda.CharCounter(this.textarea, {
+    expect(this.messageContainer.text()).toEqual('200 chars left.')
+  })
+
+  it("reads the data-char-limit attribute of a dom element for the actual limit", function() {
+    this.textarea.attr('data-char-limit', 100)
+    this.textarea.charCounter({
       messageContainer: '#' + this.messageContainer.attr('id')
-    }).render()
+    })
 
-    console.log(this.textarea.get(0).outerHTML)
+    expect(this.messageContainer.text()).toEqual('100 chars left.')
+  })
 
-    this.textarea.text(Array(200).join(''))
+  it("ignores the data-char-limit attribute if the limit is passed", function() {
+    this.textarea.attr('data-char-limit', 100)
+    this.textarea.charCounter({
+      messageContainer: '#' + this.messageContainer.attr('id'),
+      limit: 50
+    })
+
+    expect(this.messageContainer.text()).toEqual('50 chars left.')
+  })
+
+  it("decreases the possible chars by 1 if one character was added", function() {
+    this.textarea.charCounter({
+      messageContainer: '#' + this.messageContainer.attr('id')
+    })
+
+    this.textarea.text('.')
+    this.textarea.trigger('keyup')
+
+    expect(this.messageContainer.text()).toEqual('139 chars left.')
+  })
+
+  it("limits the length of the inserted test", function() {
+    this.textarea.charCounter({
+      messageContainer: '#' + this.messageContainer.attr('id')
+    })
 
     for(var i = 0; i < 200; i++) {
       this.textarea.text(this.textarea.text() + '.')
       this.textarea.trigger('keyup')
     }
 
-    console.log(this.textarea.get(0).outerHTML)
-
-    console.log(this.messageContainer.get(0).outerHTML)
+    // expect(this.)
     expect(this.textarea.text().length).toEqual(140)
+    expect(this.messageContainer.text()).toEqual('0 chars left.')
   })
 })
