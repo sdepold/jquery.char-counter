@@ -19,14 +19,15 @@
   }
 
   var checkTextLength = function($element, options) {
-    if($element.text().length > options.limit) {
-      $element.text($element.text().substring(0, options.limit))
+    var text = $element.val()
+    if(text.length > options.limit) {
+      $element.val(text.substring(0, options.limit))
     }
   }
 
   var updateMessageContainer = function($element, options) {
     var $messageContainer = $(options.messageContainer)
-      , leftCharacters    = options.limit - $element.text().length
+      , leftCharacters    = options.limit - $element.val().length
       , text              = options.message.replace('%{count}', ((leftCharacters < 0) ? 0 : leftCharacters))
 
     $messageContainer.text(text)

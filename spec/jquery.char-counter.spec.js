@@ -47,7 +47,7 @@ describe('jquery.char-counter', function() {
       messageContainer: '#' + this.messageContainer.attr('id')
     })
 
-    this.textarea.text('.')
+    this.textarea.val('.')
     this.textarea.trigger('keyup')
 
     expect(this.messageContainer.text()).toEqual('139 chars left.')
@@ -59,12 +59,12 @@ describe('jquery.char-counter', function() {
     })
 
     for(var i = 0; i < 200; i++) {
-      this.textarea.text(this.textarea.text() + '.')
+      this.textarea.val(this.textarea.val() + '.')
       this.textarea.trigger('keyup')
     }
 
     // expect(this.)
-    expect(this.textarea.text().length).toEqual(140)
+    expect(this.textarea.val().length).toEqual(140)
     expect(this.messageContainer.text()).toEqual('0 chars left.')
   })
 
