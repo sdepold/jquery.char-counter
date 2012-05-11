@@ -1,6 +1,4 @@
 (function($) {
-  "use strict"
-
   $.fn.charCounter = function(options) {
     var $element = $(this)
 
