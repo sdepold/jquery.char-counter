@@ -8,7 +8,7 @@
       limit: $element.attr('data-char-limit') || 140,
       messageContainer: '#messageContainer',
       message: "%{count} chars left."
-    }, options || {})
+    }, options || {})
 
 
     $element.keyup(function() {
