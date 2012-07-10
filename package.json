@@ -9,13 +9,15 @@
     "url": "git://github.com/dawanda/jquery.char-counter.git"
   },
   "scripts": {
-    "test": "java -jar dist/compiler.jar src/*.js --js_output_file=dist/jquery.`pwd|sed -e 's/.*jquery\\.//'`.min.js && node_modules/.bin/buster-test"
+    "test": "npm run minify && npm run buster-test",
+    "minify": "java -jar dist/compiler.jar src/*.js --js_output_file=dist/jquery.`pwd|sed -e 's/.*jquery\\.//'`.min.js",
+    "buster-test": "node_modules/.bin/buster-test"
   },
-  "dependencies": {
-    "buster": "~0.5.0",
-    "jquery.skeleton": "~0.1.0"
+  "dependencies": {},
+  "devDependencies": {
+    "jquery.skeleton": "~0.6.0",
+    "buster": "~0.6.2"
   },
-  "devDependencies": {},
   "optionalDependencies": {},
   "engines": {
     "node": "*"
