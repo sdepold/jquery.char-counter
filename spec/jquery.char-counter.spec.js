@@ -2,8 +2,15 @@ buster.spec.expose()
 
 describe('jquery.char-counter', function() {
   before(function() {
-    this.textarea = jQuery('<textarea>').appendTo(jQuery('body'))
-    this.messageContainer = jQuery('<div id="counter' + parseInt(Math.random() * 9999999) + '">').appendTo(jQuery('body'))
+    this.container = jQuery('<div>').appendTo(jQuery('body'))
+
+
+    this.textarea = jQuery('<textarea>').appendTo(this.container)
+    this.messageContainer = jQuery('<div id="counter' + parseInt(Math.random() * 9999999) + '">').appendTo(this.container)
+  })
+
+  after(function() {
+    this.container.remove()
   })
 
   it("adds the counter to the view", function() {
@@ -30,6 +37,17 @@ describe('jquery.char-counter', function() {
     })
 
     expect(this.messageContainer.text()).toEqual('100 chars left.')
+  })
+
+  it("reads the maxlength attributes if set", function() {
+    this.textarea
+      .attr('data-char-limit', null)
+      .attr('maxlength', 200)
+      .charCounter({
+        messageContainer: this.messageContainer
+      })
+
+    expect(this.messageContainer.text()).toEqual('200 chars left.')
   })
 
   it("ignores the data-char-limit attribute if the limit is passed", function() {
@@ -74,5 +92,11 @@ describe('jquery.char-counter', function() {
       message: 'Noch %{count} Zeichen verfügbar!'
     })
     expect(this.messageContainer.text()).toEqual('Noch 140 Zeichen verfügbar!')
+  })
+
+  it("=>creates a message container if non was passed", function() {
+    this.textarea.charCounter()
+
+    expect(jQuery('*', this.container).length).toEqual(3)
   })
 })

@@ -3,33 +3,41 @@
     var $element = $(this)
 
     options = $.extend({
-      limit: $element.attr('data-char-limit') || 140,
+      limit: $element.data('char-limit') || $element.attr('maxlength') || 140,
       messageContainer: '#messageContainer',
       message: "%{count} chars left."
     }, options || {})
 
+    var getMessageContainer = function() {
+      var container = $(options.messageContainer)
 
-    $element.keyup(function() {
-      checkTextLength($element, options)
-      updateMessageContainer($element, options)
-    })
+      if(container.length === 0) {
+        options.messageContainer = container = jQuery('<div>').insertAfter($element)
+      }
 
-    checkTextLength($element, options)
-    updateMessageContainer($element, options)
-  }
-
-  var checkTextLength = function($element, options) {
-    var text = $element.val()
-    if(text.length > options.limit) {
-      $element.val(text.substring(0, options.limit))
+      return container
     }
-  }
 
-  var updateMessageContainer = function($element, options) {
-    var $messageContainer = $(options.messageContainer)
-      , leftCharacters    = options.limit - $element.val().length
-      , text              = options.message.replace('%{count}', ((leftCharacters < 0) ? 0 : leftCharacters))
+    var checkTextLength = function() {
+      var text = $element.val()
+      if(text.length > options.limit) {
+        $element.val(text.substring(0, options.limit))
+      }
+    }
 
-    $messageContainer.text(text)
+    var updateMessageContainer = function() {
+      var leftCharacters    = options.limit - $element.val().length
+        , text              = options.message.replace('%{count}', ((leftCharacters < 0) ? 0 : leftCharacters))
+
+      getMessageContainer().text(text)
+    }
+
+    var evaluate = function () {
+      checkTextLength()
+      updateMessageContainer()
+    }
+
+    $element.keyup(evaluate)
+    evaluate()
   }
 })(jQuery)
