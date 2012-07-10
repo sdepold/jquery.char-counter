@@ -25,8 +25,7 @@ In order to use a custom message you can just pass the parameter `message`:
 
 The magic `%{count}` token will then be automatically replaced.
 
-You can also define the number of allowed characters either via passing `limit` or via specifying the attribute `data-char-limit`
-on the textarea:
+You can also define the number of allowed characters either via passing `limit` or via specifying the attribute `data-char-limit` or via specifying the `maxlength` attribute on the textarea:
 
     $("#user_bio").charCounter({
       messageContainer: '#user_bio_counter',
@@ -36,6 +35,14 @@ on the textarea:
     // or
 
     <textarea id="user_bio" data-char-limit="200"></textarea>
+
+    // or
+
+    <textarea id="user_bio" maxlength="200"></textarea>
+
+If you don't want to put counter into a pre-rendered container you can also let the plugin create the container for you. Just don't pass the `messageContainer`:
+
+    $("#user_bio").charCounter()
 
 ## License
 
