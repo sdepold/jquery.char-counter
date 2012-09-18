@@ -94,7 +94,7 @@ describe('jquery.char-counter', function() {
     expect(this.messageContainer.text()).toEqual('Noch 140 Zeichen verfügbar!')
   })
 
-  it("=>creates a message container if non was passed", function() {
+  it("creates a message container if non was passed", function() {
     this.textarea.charCounter()
 
     expect(jQuery('*', this.container).length).toEqual(3)
