@@ -1,4 +1,4 @@
-(function($) {
+;(function($) {
   $.fn.charCounter = function(options) {
     var $element = $(this)
 
